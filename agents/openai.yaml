@@ -1,0 +1,4 @@
+interface:
+  display_name: "相册 · 3D 滚动数字展"
+  short_description: "从相册出发，主动确认偏好，制作照片与微缩模型交织的离线滚动数字展"
+  default_prompt: "使用 $cinematic-scroll-diorama 将我提供的相册制作成 3D 滚动数字展，先询问必要偏好，再制作、验证并交付离线单文件 HTML。"
