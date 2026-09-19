@@ -8,13 +8,11 @@
 
 **由 `doubao-seed-evolving` 于 2026 年 9 月 16 日生成的历史成品。**
 
-![京都旅行回忆：朱红鸟居微缩模型与原照片](docs/kyoto-demo.jpg)
+https://github.com/user-attachments/assets/29a34583-f491-4458-86fd-59cda67d6ae0
 
-https://github.com/user-attachments/assets/d51c96ba-f52c-4b2d-b183-907f2478678c
+**[下载实际 Demo（单文件 HTML）](https://github.com/Anionex/cinematic-scroll-diorama/releases/download/demo-2026-09-16/kyoto-memories-standalone.html)**，用浏览器打开即可。上方演示从原录像第 8 秒开始，时长约 47 秒。
 
-**[下载实际 Demo（单文件 HTML）](https://github.com/Anionex/cinematic-scroll-diorama/releases/download/demo-2026-09-16/kyoto-memories-standalone.html)**，用浏览器打开即可。上方为完整约 55 秒的演示视频。
-
-HTML 原文件未改动，视频仅作兼容性转码；此历史 Demo 不代表当前版本 Skill 的端到端评测结果。
+HTML 原文件未改动，视频裁去前 8 秒并作兼容性转码；此历史 Demo 不代表当前版本 Skill 的端到端评测结果。
 
 ## 成品是什么样的？
 
