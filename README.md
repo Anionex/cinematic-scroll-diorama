@@ -100,6 +100,8 @@ cinematic-scroll-diorama/
 ├── scripts/
 │   ├── package_html.py               将构建后的网页打包为单文件 HTML
 │   └── verify_offline.py             在离线浏览器中检查成品并截图
+├── tests/
+│   └── test_verify_offline.py        基础检查状态与失败报告的回归测试
 └── .gitignore                        避免提交缓存、虚拟环境和本地环境配置
 ```
 
@@ -117,7 +119,9 @@ Agent 先读取 [SKILL.md](SKILL.md)，再按制作阶段查阅 `references/`：
 
 [package_html.py](scripts/package_html.py) 接收已构建为单个 JavaScript 包的网页入口，内嵌脚本、样式和图片，并根据页面标题生成 HTML 文件名。它不负责生成网页，也不代替前端构建工具。
 
-[verify_offline.py](scripts/verify_offline.py) 将成品复制到临时独立目录，以断网浏览器检查资源加载、章节、原照片及前后滚动，输出章节截图和 `result.json`。运行它需要 Python、Playwright 和浏览器环境；截图中的模型与排版仍需 Agent 实际查看。两个脚本由 Agent 按需运行，观看成品的人不需要运行它们。
+[verify_offline.py](scripts/verify_offline.py) 将成品复制到临时独立目录，以断网浏览器检查资源加载、章节、原照片及前后滚动，输出章节截图和 `result.json`。`runtime_passed` 仅表示基础运行通过，不代表模型、视觉或整体验收通过；这些未验证项会单独列出。运行它需要 Python、Playwright 和浏览器环境；截图中的模型与排版仍需 Agent 实际查看。两个脚本由 Agent 按需运行，观看成品的人不需要运行它们。
+
+维护者可用 `python -m unittest discover -s tests -v` 运行脚本回归测试。它不替代独立 Agent 端到端制作评测。
 
 ### 相册与生成文件放在哪里？
 

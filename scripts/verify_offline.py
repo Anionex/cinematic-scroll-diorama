@@ -12,7 +12,7 @@ import time
 from playwright.sync_api import sync_playwright
 
 
-def verify(source, viewport):
+def _verify(source, viewport, chapter_progress):
     source = source.resolve(strict=True)
     output = source.parent / (source.stem + "-review")
     output.mkdir(exist_ok=True)
@@ -58,7 +58,7 @@ def verify(source, viewport):
             assert page.locator(".memory-photo img").count() > 0, "Missing original photographs"
             page.evaluate("document.documentElement.style.scrollBehavior = 'auto'")
             for index in range(sections.count()):
-                page.evaluate("i => window.scrollTo({top: document.querySelectorAll('main section.chapter')[i].offsetTop, behavior: 'instant'})", index)
+                page.evaluate("([i, p]) => { const section = document.querySelectorAll('main section.chapter')[i]; window.scrollTo({top: section.offsetTop + Math.max(0, section.offsetHeight - innerHeight) * p, behavior: 'instant'}); }", [index, chapter_progress])
                 settle(page)
                 page.wait_for_timeout(450)
                 photo = sections.nth(index).locator(".memory-photo img")
@@ -66,7 +66,7 @@ def verify(source, viewport):
                     photo.nth(photo_index).evaluate("img => { img.loading = 'eager'; }")
                     page.wait_for_function("([section, photo]) => { const img = document.querySelectorAll('main section.chapter')[section].querySelectorAll('.memory-photo img')[photo]; return img.complete && img.naturalWidth > 0; }", arg=[index, photo_index])
                     assert photo.nth(photo_index).evaluate("img => img.naturalWidth > 0 && img.src.startsWith('data:')"), "Unembedded or broken photo"
-                path = output / f"{index:02d}-start.png"
+                path = output / f"{index:02d}-p{chapter_progress:.3f}.png"
                 page.screenshot(path=str(path), full_page=False, timeout=15000)
                 screenshots.append(str(path))
             page.evaluate("window.scrollTo({top: 0, behavior: 'instant'})")
@@ -89,13 +89,39 @@ def verify(source, viewport):
 
     assert not external, f"Unexpected resource requests: {external}"
     assert not errors, f"Browser errors: {errors}"
-    result = {"status": "passed", "file": str(source), "screenshots": screenshots,
+    result = {"status": "runtime_passed", "runtime_checks": "passed",
+              "acceptance": "pending", "file": str(source), "screenshots": screenshots,
+              "chapter_progress": chapter_progress,
               "external_requests": external, "errors": errors,
               "scroll_positions": {"initial": initial, "forward": forward, "reverse": reverse},
               "checks": ["isolated_file_offline", "chapter_screenshots", "embedded_photos",
                          "native_scroll_forward_reverse"],
-              "visual_review": "Inspect screenshots and a representative transition before delivery"}
-    (output / "result.json").write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding="utf-8")
+              "unverified": ["poster_quality", "miniature_geometry", "world_coordinates",
+                             "drag_rotation", "narrative_transitions"],
+              "visual_review": "Pending: inspect actual reading frames and transitions; runtime checks do not establish final acceptance"}
+    return result
+
+
+def verify(source, viewport, chapter_progress=0.35):
+    source = source.resolve()
+    output = source.parent / (source.stem + "-review")
+    output.mkdir(exist_ok=True)
+    report = output / "result.json"
+
+    def save(value):
+        report.write_text(json.dumps(value, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    # Replace a previous pass before starting, including when this run fails.
+    save({"status": "running", "acceptance": "pending", "file": str(source)})
+    try:
+        if not 0 <= chapter_progress <= 1:
+            raise ValueError("chapter_progress must be between 0 and 1")
+        result = _verify(source, viewport, chapter_progress)
+    except Exception as error:
+        save({"status": "runtime_failed", "runtime_checks": "failed",
+              "acceptance": "not_passed", "file": str(source), "error": str(error)})
+        raise
+    save(result)
     return result
 
 
@@ -103,11 +129,13 @@ def main():
     cli = argparse.ArgumentParser(description=__doc__)
     cli.add_argument("html", type=Path)
     cli.add_argument("--viewport", default="1280x800", help="Confirmed desktop viewport")
+    cli.add_argument("--chapter-progress", type=float, default=0.35,
+                     help="Screenshot position within each pinned chapter (0..1); choose the actual reading interval")
     args = cli.parse_args()
     try:
         width, height = map(int, args.viewport.lower().split("x"))
         assert width > 0 and height > 0, "Invalid viewport"
-        result = verify(args.html, {"width": width, "height": height})
+        result = verify(args.html, {"width": width, "height": height}, args.chapter_progress)
     except Exception as error:
         print(json.dumps({"status": "failed", "error": str(error)}, ensure_ascii=False), file=sys.stderr)
         return 1
