@@ -8,13 +8,13 @@
 
 **由 `doubao-seed-evolving` 于 2026 年 9 月 16 日生成的历史成品。**
 
-[![京都旅行回忆：朱红鸟居微缩模型与原照片](docs/kyoto-demo.jpg)](https://github.com/Anionex/cinematic-scroll-diorama/releases/download/demo-2026-09-16/kyoto-memories-demo.mp4)
+![京都旅行回忆：朱红鸟居微缩模型与原照片](docs/kyoto-demo.jpg)
 
-- **[下载实际 Demo（单文件 HTML）](https://github.com/Anionex/cinematic-scroll-diorama/releases/download/demo-2026-09-16/kyoto-memories-standalone.html)**：下载后用浏览器打开。
-- **[观看 / 下载演示视频（MP4，约 55 秒）](https://github.com/Anionex/cinematic-scroll-diorama/releases/download/demo-2026-09-16/kyoto-memories-demo.mp4)**：由原始录屏转码，保留完整时长。
-- [下载原始录屏（MOV）](https://github.com/Anionex/cinematic-scroll-diorama/releases/download/demo-2026-09-16/kyoto-memories-original.mov)
+https://github.com/user-attachments/assets/d51c96ba-f52c-4b2d-b183-907f2478678c
 
-Demo 与视频在公开的 Release 附件中提供，不随 Skill 安装下载。原版 HTML 和 MOV 未改动；此历史 Demo 不代表当前版本 Skill 的端到端评测结果。
+**[下载实际 Demo（单文件 HTML）](https://github.com/Anionex/cinematic-scroll-diorama/releases/download/demo-2026-09-16/kyoto-memories-standalone.html)**，用浏览器打开即可。上方为完整约 55 秒的演示视频。
+
+HTML 原文件未改动，视频仅作兼容性转码；此历史 Demo 不代表当前版本 Skill 的端到端评测结果。
 
 ## 成品是什么样的？
 
