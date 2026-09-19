@@ -12,18 +12,6 @@
 请从 GitHub 私有仓库 Anionex/cinematic-scroll-diorama 下载并安装该 Skill，读取其中的 SKILL.md，基于【相册路径或附件】制作高质量的照片与 3D 微缩模型滚动数字展。先查看素材，再按 Skill 询问尚未确定的创作偏好与制作方式；完成制作和验证后，交付可离线双击打开的单文件 HTML。
 ```
 
-## 实际 Demo：京都旅行回忆
-
-**由 `doubao-seed-evolving` 于 2026 年 9 月 16 日生成的历史成品。**
-
-[![京都旅行回忆：朱红鸟居微缩模型与原照片](docs/kyoto-demo.jpg)](https://github.com/Anionex/cinematic-scroll-diorama/releases/download/demo-2026-09-16/kyoto-memories-demo.mp4)
-
-- **[下载实际 Demo（单文件 HTML）](https://github.com/Anionex/cinematic-scroll-diorama/releases/download/demo-2026-09-16/kyoto-memories-standalone.html)**：下载后用浏览器打开。
-- **[观看 / 下载演示视频（MP4，约 55 秒）](https://github.com/Anionex/cinematic-scroll-diorama/releases/download/demo-2026-09-16/kyoto-memories-demo.mp4)**：由原始录屏转码，保留完整时长。
-- [下载原始录屏（MOV）](https://github.com/Anionex/cinematic-scroll-diorama/releases/download/demo-2026-09-16/kyoto-memories-original.mov)
-
-HTML 与视频保存在本私有仓库的 Release 附件中，需要仓库访问权限；原版 HTML 和 MOV 未改动，不随 Skill 安装下载。此历史 Demo 不代表当前版本 Skill 的端到端评测结果。
-
 ## 成品是什么样的？
 
 - **一段完整的滚动叙事**：从封面进入各个章节，滚动时镜头、照片与文字随之变化，最后抵达结尾页。
@@ -98,7 +86,7 @@ Agent 会提供最终 HTML 的文件路径，并保留源代码供后续修改�
 
 ## 项目文件说明
 
-这个仓库保存制作数字展的指导与工具，不包含你的相册。上方历史 Demo 单独保存在 Release 附件中，不是制作时必须复用的模板。
+这个仓库保存制作数字展的指导与工具，不包含你的相册或预制的旅行网页。
 
 ```text
 cinematic-scroll-diorama/
@@ -106,8 +94,6 @@ cinematic-scroll-diorama/
 ├── SKILL.md                          Agent 的统一执行入口
 ├── agents/
 │   └── openai.yaml                   Skill 的显示名称、简介和默认提示词
-├── docs/
-│   └── kyoto-demo.jpg                README 中的历史 Demo 视频预览图
 ├── references/
 │   ├── intake.md                     创作问答、制作方式与样板确认规则
 │   ├── 3d-creation.md                网页微缩模型的制作指导
