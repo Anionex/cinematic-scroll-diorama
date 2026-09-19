@@ -73,4 +73,42 @@ Agent 会提供最终 HTML 的文件路径，并保留源代码供后续修改�
 
 ---
 
-给 Agent 的完整执行说明见 [SKILL.md](SKILL.md)。
+## 项目文件说明
+
+这个仓库保存制作数字展的指导与工具，不包含你的相册或预制的旅行网页。
+
+```text
+cinematic-scroll-diorama/
+├── README.md                         给使用者看的入门说明
+├── SKILL.md                          Agent 的统一执行入口
+├── agents/
+│   └── openai.yaml                   Skill 的显示名称、简介和默认提示词
+├── references/
+│   ├── intake.md                     创作问答与样板确认规则
+│   ├── 3d-creation.md                网页微缩模型的制作指导
+│   └── runtime-and-delivery.md       滚动实现、离线打包与验收指导
+├── scripts/
+│   ├── package_html.py               将构建后的网页打包为单文件 HTML
+│   └── verify_offline.py             在离线浏览器中检查成品并截图
+└── .gitignore                        避免提交缓存、虚拟环境和本地环境配置
+```
+
+### Agent 如何使用这些文件？
+
+Agent 先读取 [SKILL.md](SKILL.md)，再按制作阶段查阅 `references/`：
+
+- [intake.md](references/intake.md)：决定哪些偏好需要询问、何时等待你的答复，以及样板确认后如何继续。
+- [3d-creation.md](references/3d-creation.md)：指导从照片提炼模型，处理构图、材质、灯光、镜头和结构问题。它是参考文档，不是另一个需要安装的 Skill，也不是模型素材库。
+- [runtime-and-delivery.md](references/runtime-and-delivery.md)：说明怎样组织滚动叙事、嵌入资源并检查最终 HTML。
+
+`agents/openai.yaml` 是供支持它的工具展示 Skill 信息的元数据，不包含子 Agent 或嵌套 Skill。普通使用者无需修改这些文件。
+
+### 两个脚本负责什么？
+
+[package_html.py](scripts/package_html.py) 接收已构建为单个 JavaScript 包的网页入口，内嵌脚本、样式和图片，并根据页面标题生成 HTML 文件名。它不负责生成网页，也不代替前端构建工具。
+
+[verify_offline.py](scripts/verify_offline.py) 将成品复制到临时独立目录，以断网浏览器检查资源加载、章节、原照片及前后滚动，输出章节截图和 `result.json`。运行它需要 Python、Playwright 和浏览器环境；截图中的模型与排版仍需 Agent 实际查看。两个脚本由 Agent 按需运行，观看成品的人不需要运行它们。
+
+### 相册与生成文件放在哪里？
+
+你的相册位于你指定的位置；Agent 在制作项目的工作区保留简短的 `design.md`、网页源代码、最终 HTML 和必要的检查产物。这些是每次制作生成的文件，不是本 Skill 仓库自带的内容。分享作品时只需发送最终 HTML；后续修改则保留源代码。
